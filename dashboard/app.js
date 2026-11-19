@@ -16,8 +16,10 @@
   var params = new URLSearchParams(window.location.search);
   var shot = params.get('shot');
   var state = { q: '', category: 'all', chain: 'all', tab: 'pre-token', sort: 'implied', dir: -1, selected: null, watchlistOnly: false };
-  // 'filtered' keeps the defaults: the pre-token tab, all categories, all
-  // chains — the token-status filter on its own, which is the radar's point.
+  // 'filtered' shows the watchlist only: the pre-token tab with the
+  // watchlist-only box checked — exactly the 40 watchlist protocols, so the
+  // filtered shot differs from the board's 198 rows.
+  if (shot === 'filtered') state.watchlistOnly = true;
   if (shot === 'detail') state.selected = DATA.rows.length ? DATA.rows[0].slug : null;
 
   var usd = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });

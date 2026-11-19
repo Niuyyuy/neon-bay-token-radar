@@ -16,17 +16,9 @@
   var params = new URLSearchParams(window.location.search);
   var shot = params.get('shot');
   var state = { q: '', category: 'all', chain: 'all', tab: 'pre-token', sort: 'implied', dir: -1, selected: null, watchlistOnly: false };
-  if (shot === 'filtered') state.category = topCategory();
+  // 'filtered' keeps the defaults: the pre-token tab, all categories, all
+  // chains — the token-status filter on its own, which is the radar's point.
   if (shot === 'detail') state.selected = DATA.rows.length ? DATA.rows[0].slug : null;
-
-  // The category with the most rows on the board: the filtered shot's filter.
-  function topCategory() {
-    var counts = {};
-    DATA.rows.forEach(function (r) { var c = r.category || 'Other'; counts[c] = (counts[c] || 0) + 1; });
-    var best = 'all', n = 0;
-    Object.keys(counts).forEach(function (c) { if (counts[c] > n) { n = counts[c]; best = c; } });
-    return best;
-  }
 
   var usd = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
   function fmtUsd(n) {
